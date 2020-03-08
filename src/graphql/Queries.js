@@ -11,15 +11,30 @@ const GET_FILMS = gql`
   }
 `;
 
-const GET_FILM_BY_ID = gql`
+const GET_FILM_DETAILS_BY_ID = gql`
   query FilmById($id: ID) {
     Film(id: $id) {
       id
       title
       episodeId
       director
+      releaseDate
+      planets {
+        name
+        population
+      }
+      characters {
+        name
+        homeworld {
+          name
+        }
+      }
+      starships {
+        name
+        cargoCapacity
+      }
     }
   }
 `;
 
-export {GET_FILMS, GET_FILM_BY_ID};
+export {GET_FILMS, GET_FILM_DETAILS_BY_ID};
