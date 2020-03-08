@@ -4,8 +4,11 @@ export const FilmsContext = createContext();
 
 export default function FilmsContextProvider({children}) {
   const [films, setFilms] = useState([]);
+  const [detailsTitle, setDetailsTitle] = useState('');
 
   const state = {
+    detailsTitle,
+    setDetailsTitle,
     films,
     setFilms,
   };

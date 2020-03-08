@@ -20,9 +20,11 @@ import {useQuery} from '@apollo/react-hooks';
 // Queries
 import {GET_FILMS} from '../graphql/Queries';
 
-import Header from './Header';
+const onFilmClick = (index, props) => {
+  props.navigation.navigate('details', {id: index});
+};
 
-const Films = () => {
+const Films = props => {
   const {films, setFilms} = useContext(FilmsContext);
 
   const {loading, error, data} = useQuery(GET_FILMS);
@@ -54,7 +56,6 @@ const Films = () => {
 
   return (
     <ScrollView>
-      <Header />
       <View style={styles.container}>
         {films.map((film, index) => {
           return (
@@ -79,8 +80,9 @@ const Films = () => {
                         color="white"
                       />
                     }
+                    onPress={() => onFilmClick(film.id, props)}
                     buttonStyle={styles.filmButton}
-                    title={`${film.episodeId}`}
+                    title={`Ep. ${film.episodeId}`}
                     titleStyle={styles.filmButtonText}
                   />
                 </View>

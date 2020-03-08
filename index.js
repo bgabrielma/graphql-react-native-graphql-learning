@@ -2,6 +2,12 @@ import React from 'react';
 import ApolloClient from 'apollo-boost';
 import {ApolloProvider} from '@apollo/react-hooks';
 
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+
+// Context
+import FilmsContextProvider from './src/context/FilmsContext';
+
 /**
  * @format
  */
@@ -16,9 +22,13 @@ const client = new ApolloClient({
 });
 
 const AppRoot = () => (
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+  <NavigationContainer>
+    <ApolloProvider client={client}>
+      <FilmsContextProvider>
+        <App />
+      </FilmsContextProvider>
+    </ApolloProvider>
+  </NavigationContainer>
 );
 
 AppRegistry.registerComponent(appName, () => AppRoot);
