@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {
   View,
@@ -14,33 +14,60 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 // Context
 import {FilmsContext} from '../context/FilmsContext';
 
+// useQuery apollo hook
+import {useQuery} from '@apollo/react-hooks';
+
+// Queries
+import {GET_FILMS} from '../graphql/Queries';
+
 import Header from './Header';
-
-function deleteLastElement(films) {
-  const length = films.length;
-
-  console.log(length);
-}
 
 const Films = () => {
   const {films, setFilms} = useContext(FilmsContext);
+
+  const {loading, error, data} = useQuery(GET_FILMS);
+
+  // because online server doesn't provide an image for films
+  const [urlImageFilms, setUrlImageFilms] = useState(
+    'https://data.whicdn.com/images/306659244/original.jpg',
+  );
+
+  if (loading) {
+    return (
+      <View style={styles.containerLoadingOrError}>
+        <Text style={styles.textLoadingOrError}>Loading data...</Text>
+      </View>
+    );
+  }
+  if (error) {
+    return (
+      <View style={styles.containerLoadingOrError}>
+        <Text style={styles.textLoadingOrError}>
+          Error on loading: {error.message}
+        </Text>
+      </View>
+    );
+  }
+
+  // data is available
+  setFilms(data.allFilms);
 
   return (
     <ScrollView>
       <Header />
       <View style={styles.container}>
-        {films.map((u, i) => {
+        {films.map((film, index) => {
           return (
-            <View key={i}>
+            <View key={index}>
               <View style={styles.box}>
                 <Image
                   style={styles.image}
                   resizeMode="cover"
-                  source={{uri: u.avatar}}
+                  source={{uri: urlImageFilms}}
                 />
                 <View style={styles.boxInformation}>
-                  <Text style={styles.filmTitle}>A New Hope</Text>
-                  <Text style={styles.filmDirector}>George Lucas</Text>
+                  <Text style={styles.filmTitle}>{film.title}</Text>
+                  <Text style={styles.filmDirector}>{film.director}</Text>
                 </View>
                 <View style={styles.boxInformation}>
                   <Button
@@ -53,7 +80,7 @@ const Films = () => {
                       />
                     }
                     buttonStyle={styles.filmButton}
-                    title="Ep. 4"
+                    title={`${film.episodeId}`}
                     titleStyle={styles.filmButtonText}
                   />
                 </View>
@@ -62,27 +89,6 @@ const Films = () => {
           );
         })}
       </View>
-      <Button
-        icon={
-          <FontAwesome5
-            name="jedi"
-            size={15}
-            style={styles.filmButton}
-            color="white"
-          />
-        }
-        onPress={() => {
-          const newFilms = [...films];
-
-          // remove last element
-          newFilms.shift();
-
-          setFilms(newFilms);
-        }}
-        buttonStyle={[styles.filmButton, {margin: 40}]}
-        title="Delete locally last element"
-        titleStyle={styles.filmButtonText}
-      />
     </ScrollView>
   );
 };
@@ -97,6 +103,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: 2,
     justifyContent: 'center',
+  },
+  containerLoadingOrError: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textLoadingOrError: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   box: {
     margin: 15,

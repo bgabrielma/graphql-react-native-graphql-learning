@@ -1,29 +1,9 @@
-import React, {Component, createContext, useState} from 'react';
+import React, {createContext, useState} from 'react';
 
 export const FilmsContext = createContext();
 
-const filmsArray = [
-  {
-    name: 'Bruno Martins',
-    avatar: 'https://data.whicdn.com/images/306659244/original.jpg',
-    subtitle: 'Vice Director',
-  },
-  {
-    name: 'Bruno Martins',
-    avatar: 'https://data.whicdn.com/images/306659244/original.jpg',
-  },
-  {
-    name: 'Bruno Martins',
-    avatar: 'https://data.whicdn.com/images/306659244/original.jpg',
-  },
-  {
-    name: 'Bruno Martins',
-    avatar: 'https://data.whicdn.com/images/306659244/original.jpg',
-  },
-];
-
 export default function FilmsContextProvider({children}) {
-  const [films, setFilms] = useState(filmsArray);
+  const [films, setFilms] = useState([]);
 
   const state = {
     films,
