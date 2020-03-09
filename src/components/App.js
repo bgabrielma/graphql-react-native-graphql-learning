@@ -5,6 +5,7 @@ import React, {useContext} from 'react';
 import Films from './Films';
 import Header from './Header';
 import Details from './Details';
+import SplashScreen from './SplashScreen';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -18,6 +19,14 @@ const components = () => {
 
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="splashScreen"
+        component={SplashScreen}
+        options={{
+          headerTransparent: true,
+          headerTitle: '',
+        }}
+      />
       <Stack.Screen
         name="films"
         component={Films}
