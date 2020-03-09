@@ -17,6 +17,7 @@ const GET_FILM_DETAILS_BY_ID = gql`
       id
       title
       episodeId
+      openingCrawl
       director
       releaseDate
       planets {

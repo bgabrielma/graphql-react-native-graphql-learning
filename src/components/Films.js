@@ -26,13 +26,9 @@ const onFilmClick = (index, props) => {
 
 const Films = props => {
   const {films, setFilms} = useContext(FilmsContext);
+  const {urlImageFilms, setUrlImageFilms} = useContext(FilmsContext);
 
   const {loading, error, data} = useQuery(GET_FILMS);
-
-  // because online server doesn't provide an image for films
-  const [urlImageFilms, setUrlImageFilms] = useState(
-    'https://data.whicdn.com/images/306659244/original.jpg',
-  );
 
   if (loading) {
     return (
