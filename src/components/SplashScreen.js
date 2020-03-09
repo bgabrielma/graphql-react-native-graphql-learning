@@ -5,7 +5,7 @@ import {FilmsContext} from '../context/FilmsContext';
 
 const SplashScreen = props => {
   const {urlImageFilms} = useContext(FilmsContext);
-  setInterval(() => props.navigation.navigate('films'), 4222);
+  setTimeout(() => props.navigation.navigate('films'), 4220);
 
   return (
     <View style={styles.container}>
