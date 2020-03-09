@@ -1,16 +1,13 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, Image} from 'react-native';
-// Context
-import {FilmsContext} from '../context/FilmsContext';
 
 const SplashScreen = props => {
-  const {urlImageFilms} = useContext(FilmsContext);
-  setTimeout(() => props.navigation.navigate('films'), 4220);
+  setTimeout(() => props.navigation.replace('films'), 4220);
 
   return (
     <View style={styles.container}>
       <Image
-        source={{uri: urlImageFilms}}
+        source={{uri: 'https://data.whicdn.com/images/306659244/original.jpg'}}
         resizeMode="cover"
         style={styles.image}
       />
